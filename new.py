@@ -1,0 +1,6 @@
+print("variable types")
+print("they are")
+print("string")
+print("floatong point number")
+print("integer")
+print ("boolean")
