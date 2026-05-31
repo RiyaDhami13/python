@@ -1,0 +1,35 @@
+First day as programming
+Compiler vs  Interpreter differences
+
+#Interpreter -- line by line compilation and then execution
+
+
+#Intedation format in python
+
+#Input and output
+
+#Formatting
+f"string"
+
+
+#variable vs keyword
+Rules for defining variables
+
+#Camel cases
+child parent
+
+#swwaping variables is easy in python
+
+del method
+
+operators..and its types//
+arithmetic
+Comparison
+Logical
+Assignment operators
+
+Identity operators
+
+#IDs
+hexids and all
+memorey allocations and caching of largge numbers
