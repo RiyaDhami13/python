@@ -15,6 +15,10 @@ f"string"
 #variable vs keyword
 Rules for defining variables
 
+Keyword stuff
+like how to see with this..like with kwlist
+
+
 #Camel cases
 child parent
 
@@ -33,3 +37,12 @@ Identity operators
 #IDs
 hexids and all
 memorey allocations and caching of largge numbers
+
+
+membership operators
+
+#data types
+like sequential data type and all
+
+then 
+sets, list, tuples
