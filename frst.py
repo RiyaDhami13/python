@@ -42,6 +42,38 @@ print(f"Types: {type(integer_num)}, {type(float_num)}, {type(complex_num)}\n")
 message = "Learning Data & AI"
 print(f"String Indexing: first letter is '{message[0]}'")
 
+#List: Ordered, mutable collection. Allows duplicates.
+tech_stack = ["PostgresSQL","Python", "Docker"]
+tech_stack.append("Git")
+print(f"Tech Stack: {tech_stack}\n")
+
+#Tuple: Ordered, immutable collection.Allow duplicates
+coordinates = (28.96,80.18)
+print(f"Coordinates in tuple form: {coordinates}\n")
+
+#Set:Unordered collection of unique items. Mutable.Duplicates not allowed.
+raw_ids = [101,106,102,103,103,104,108,105,101]
+unique_ids = set(raw_ids)
+print(f"Unique IDs: {unique_ids}\n")
+
+#Dictionary: Unordered key-value pairs. Mutable.
+student = {"name":"Riya Dhami",
+          "age":19,
+          "department":"Computer Engineering"}
+print(f"Dictionary:{student}\n")
+print(f"Student's name: {student['name']}")
+print(f"Student's age: {student['age']}")
+print(f"Student's department: {student['department']}")
+
+#Binary sequence types:
+byte_data = b"Hello"
+print(f"Byte data is {byte_data}\n")
+
+#Boolean type of data:
+is_learning = True        # bool: True or False
+empty_value = None        #None Type: repressents the absence of a value
+print(f"Is Learning Active? {is_learning} | Missing Data marker: {empty_value}")
+print("\n")
 
 # --- 5. SWAPPING & DELETING ---
 a, b = 10, 20
@@ -50,3 +82,19 @@ print(f"Swapped: a={a}, b={b}")
 
 temp_var = "I will be deleted"
 del temp_var # Removes variable from memory
+
+# --- 6. OPERATORS ---
+# Arithmetic: +, -, *, /, // (floor), % (mod), ** (power)
+x = 15, y = 3.5
+c = x + y
+print(c)
+print(x/y)
+print(x//y)
+print(x**2)
+
+# Comparison: ==, !=, >, <, >=, <=
+# Logical: and, or, not
+# Identity: is, is not (Checks memory location)
+# Membership: in, not in (Checks existence in sequence)
+
+

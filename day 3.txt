@@ -46,3 +46,7 @@ like sequential data type and all
 
 then 
 sets, list, tuples
+
+#learnt about dictionary, boolean data type, binary data type.
+#swap and delete in python is so easy. about operator and all
+
