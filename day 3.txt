@@ -50,3 +50,12 @@ sets, list, tuples
 #learnt about dictionary, boolean data type, binary data type.
 #swap and delete in python is so easy. about operator and all
 
+
+#jun 3 - day 5
+Type Casting 
+Type casting is explicitly converting a variable from one data type to another using built-in functions like int, float, str
+
+Conditional statements like if-else, if elif-else:
+Nested a loop .
+
+
