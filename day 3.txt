@@ -58,4 +58,5 @@ Type casting is explicitly converting a variable from one data type to another u
 Conditional statements like if-else, if elif-else:
 Nested a loop .
 
+Jun 4 - day 6
 
