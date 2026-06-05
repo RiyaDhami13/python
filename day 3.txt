@@ -59,4 +59,12 @@ Conditional statements like if-else, if elif-else:
 Nested a loop .
 
 Jun 4 - day 6
+string mehtods like strip(), lower(),title()]
+the input dyanmics
+
+Jun5 - day 7
+while condition with boolean flags
+break and continue usage
+append() and len() function uses
+list use 
 
