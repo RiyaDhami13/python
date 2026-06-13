@@ -1,0 +1,52 @@
+PS E:\DLytica> & "C:/Users/ssd m.2/AppData/Local/Programs/Python/Python314/python.exe" e:/DLytica/Day_four.py
+---------Day 4-----------
+
+-------------------------
+
+--CINEMA TICKET PRICING--
+
+-------------------------
+
+What is your age? :25
+
+Which day is today? :monday
+Are you a cinema member? (yes/no): yes
+
+----------------------------------------
+             TICKET SUMMARY             
+----------------------------------------
+Age / Day / Member: 25 / Monday / yes
+Age Discount:       0.0%
+Member Weekday Disc:10.0%
+Popcorn Offer:      🍿 Large Free Popcorn Combo!
+Final Ticket Price: 450.00
+----------------------------------------
+Enjoy the show! 🎬
+========================================
+PS E:\DLytica> & "C:/Users/ssd m.2/AppData/Local/Programs/Python/Python314/python.exe" e:/DLytica/Day_four.py
+---------Day 4-----------
+
+-------------------------
+
+--CINEMA TICKET PRICING--
+
+-------------------------
+
+What is your age? :12
+
+Which day is today? :sunday
+Are you a cinema member? (yes/no): no
+
+----------------------------------------
+             TICKET SUMMARY             
+----------------------------------------
+Customer Category:  Minor (Under 18)
+Age / Day / Member: 12 / Sunday / yes
+Age Discount:       50.0%
+Member Weekday Disc:0.0%
+Popcorn Offer:      No Offer
+Final Ticket Price: 250.00
+----------------------------------------
+Enjoy the show! 🎬
+========================================
+PS E:\DLytica> 
