@@ -1,0 +1,8 @@
+# Quick setup: Create a sample file to test with
+sample_data = "Food,150\nTransport,60\nFood,200\nEntertainment,120\nUtilities,300\nTransport,45"
+with open("expenses.txt", "w") as f:
+    f.write(sample_data)
+
+# Test Task 1
+loaded_data = load_expenses("expenses.txt")
+print("Loaded Expenses:", loaded_data)
