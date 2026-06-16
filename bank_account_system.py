@@ -35,7 +35,7 @@ class BankAccount:
 
 class SavingsAccount(BankAccount):
   def __init__(self, owner:str, opening_balance:float):
-    super.__init__(owner,opening_balance)
+    super().__init__(owner,opening_balance)
   
   def add_interest(self, rate:float):
     """Calculates the interest and utilizes the parent modifier to add funds safely."""
