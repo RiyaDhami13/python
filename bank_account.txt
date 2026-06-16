@@ -1,6 +1,0 @@
-Name: Riya Dhami
-Using Object-Oriented Programming (OOP) principles to enforce strict data isolation.
-
-Encapsulation manages the private vault. Inheritance shares core behaviors and method overriding.
-
-allowing custom withdrawls for specialized account types

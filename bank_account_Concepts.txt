@@ -1,0 +1,14 @@
+Name: Riya Dhami
+
+
+Encapsulation manages the private vault: the data inside can not be accidently changed or corrupted.
+
+Inheritance shares core behaviors: a child is allowed to copy the parent.
+ class SavingsAccount(BankAccount)and class CurrentAccount(BankAccount) are the "child" classes here to the existing BankAccount class.
+
+The super() function: child class can trigger into parent class with this.
+
+Method Overriding: when a child class redefines a method that it already inherited from its parent, giving it a brand-new set of rules.
+
+Data Validation: checking inputs before processing them.
+ If a user tries to deposit a negative number (amount > 0), it blocks the action and prints a helpful warning message instead of crashing the program.

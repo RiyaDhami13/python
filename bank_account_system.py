@@ -1,3 +1,5 @@
+#Name: Riya Dhami
+#Using Object-Oriented Programming (OOP) principles to enforce strict data isolation.
 print("----------Kanchanpur Bank Digital Engine--------")
 
 class BankAccount:
@@ -80,3 +82,16 @@ c.withdraw(200)
       
     
 
+#----------Kanchanpur Bank Digital Engine--------
+# *****Testing System Executions*********
+#---------------------------------------
+#--RUN 1: Test Saving Account (RIYA)---
+#✅ Deposited: 500.00 | Current Balance: 1500.00
+#📈 Interest applied (+10%): Added 150.0:.2f
+#Final Balance Check: 1650.0
+#⚠️ Transcation Rejected: Not enough balance! (Attempted: 5000 | Available: 1650.0)
+
+#---RUN 2: Tesing Current Account (KISHOR)---
+#💸 Overdraft Withdrew:  600.00 | Current Balance: self.get_balance():.2f
+#Final Balance Check: -400
+#⚠️ Transcation Rejected: Overdraft limit reached.(Limit: 500)#---------------------------------------
