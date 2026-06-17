@@ -1,0 +1,23 @@
+-------------------------------------------
+Smart wallet concepts with RIYA DHAMI
+--------------------------------------------
+
+# Dunder methods: Double underscore methods:
+ built in hooks in python that starts and ends with __ as for  we used __repr__. They allow custom classes to emulate  native object behaviors.
+
+
+#operator overloading:how built in operatoes (such as +,==,>) interact with classes. rewriting  the rules for those specific symbols so our objects can use them.
+
+  __add__: tells python how to use the  + sign with money.
+  __eq__ : Tells Python how to check if two money amounts match.
+  __lt__ (<): This stands for "Less Than".
+
+#String Representations
+Python uses two different "masks" to turn an in-memory object into 
+readable text words depending on who is looking at the screen. one for the developer and other for the users
+- __str__: Designed for regular human users.
+- __repr__: Designed for developers during system debugging.
+
+
+By writing the '__len__' method inside our Wallet class, we turn the 
+wallet into a smart container (like an inventory).
