@@ -18,17 +18,25 @@ class Money:
   
   def __repr__(self) -> str:
     """Representation string: Precise blueprint view for developer debugging."""
+    return f"Money({self.amount}, '{self.currency}')"
 
   def __add__(self,other) -> 'Money':
     """Operator Overloading(+): Combines two money objects into a brand new one."""
+    if isinstance(other, Money):
+      return Money(self.amount + other.amount, self.currency)
+    return None
+
 
   #Return NEW object, does not change self or other.
   def __eq__(self, other) -> bool:
     """Equality Operator (==): Compares if two money amounts match perfectly."""
+    if isinstance(other, Money):
+      return self.amount == other.amount
+    return False
   
   def __lt__(self, other) -> bool:
     """Less-Than Operator (<): Crucial for allowing python's native sorted() to function."""
-    if isinstance(other,Money):
+    if isinstance(other, Money):
       return self.amount < other.amount
     return False
 
@@ -64,17 +72,29 @@ print("--- RUN 1: TESTING MONEY OPERATIONS ---")
 a = Money(500)
 b = Money(300)
 
-print(f"Addition Test (a + b):     {a + b}")       # Triggers __add__ then __str__
-print(f"Equality Test (a == 500):  {a == Money(500)}") # Triggers __eq__
-print(f"Comparison Test (b < a):   {b < a}")       # Triggers __lt__
+print(f"Addition Test (a + b):    {a + b}")             # Triggers __add__ then __str__
+print(f"Equality Test (a == 500): {a == Money(500)}")        # Triggers __eq__
+print(f"Comparison Test (b < a):  {b < a}")               # Triggers __lt__
 
 print("\n--- RUN 2: SORTING NATIVE OBJECTS ---")
 notes = [Money(100), Money(500), Money(50)]
-print(f"Raw developer display:    {notes.__repr__()}")
-print(f"Sorted human display:     {sorted(notes)}") # Uses __lt__ to sort!
+print(f"Raw developer display:   {notes.__repr__()}")
+print(f"Sorted human display:    {sorted(notes)}")           # Uses __lt__ to sort!
 
 print("\n--- RUN 3: WALLET CONTAINER SYSTEM ---")
 w = Wallet(notes)
-print(f"Total Notes in Wallet:    {len(w)}")        # Triggers __len__
-print(f"Total Value in Wallet:    {w.total()}")    # Processes final summary object
+print(f"Total Notes in Wallet:   {len(w)}")                 # Triggers __len__
+print(f"Total Value in Wallet:   {w.total()}")               # Processes final summary object
 
+
+#--- RUN 1: TESTING MONEY OPERATIONS ---
+#Equality Test (a == 500): True
+#Comparison Test (b < a):  True
+
+#--- RUN 2: SORTING NATIVE OBJECTS ---
+#Raw developer display:   [Money(100, 'Rs'), Money(500, 'Rs'), Money(50, 'Rs')]
+#Sorted human display:    [Money(50, 'Rs'), Money(100, 'Rs'), Money(500, 'Rs')]
+
+#--- RUN 3: WALLET CONTAINER SYSTEM ---
+#Total Notes in Wallet:   3
+#Total Value in Wallet:   Rs 650.0
