@@ -1,0 +1,13 @@
+OOP CONCEPT WORKSHEET: EMPLOYEE PAYROLL SYSTEM
+Name: Riya Dhami
+
+#Abstraction: the process of hiding bg details and creating a rule set for the code. we used 'abc' module to trun the class into Abstract class
+ (such as we did with Employee class)
+
+
+#Abstract Methods: When we put '@abstractmethod' tag over 'calculate_pay()', we set a strict software rule: 
+ Any child class that wants to be counted as an Employee MUST 
+ write its own specific math formula for calculate_pay().
+
+#Polymorphism: different objects respond to the same command in their own way.
+
