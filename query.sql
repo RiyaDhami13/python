@@ -47,3 +47,19 @@ ALTER TABLE banking.customers RENAME COLUMN phone_number TO contact_number;
 
 -- 4. DROP the column completely if it's no longer needed
 ALTER TABLE banking.customers DROP COLUMN contact_number;
+
+INSERT INTO banking.accounts (account_id, customer_id, branch_id, account_number, account_type, balance)
+VALUES (1, 101, 5, 'ACT-998822', 'Savings', 5000.00);
+
+INSERT INTO banking.accounts (account_id, account_number, account_type, balance)
+VALUES (2, 'ACT-111111', 'Savings', -50.00);
+
+INSERT INTO banking.accounts (account_id, account_number, account_type, balance)
+VALUES (3, 'ACT-222222', 'Student_Account', 100.00);
+
+UPDATE banking.accounts
+SET balance = 7500.00
+WHERE account_id = 1;
+
+DELETE FROM banking.accounts
+WHERE account_id = 1;

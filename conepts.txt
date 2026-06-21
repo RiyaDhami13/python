@@ -1,0 +1,54 @@
+======================================================================
+DATABASE FOUNDATIONS WORKSHEET: RELATIONS & DATA MANIPULATION
+Name: Riya Dhami
+Assignment: Database Infrastructure (DDL vs. DML)
+======================================================================
+
+1. DATABASE INFRASTRUCTURE & BACKEND WORKSPACE
+----------------------------------------------------------------------
+- pg_hba.conf: The host-based authentication configuration file in 
+  PostgreSQL. Changing the method to 'trust' allows local developers to 
+  bypass password lockouts during setup before setting a secure admin password.
+- pgAdmin: A dedicated graphical management client for PostgreSQL that 
+  provides a clean environment to execute scripts when local code editor 
+  extensions conflict.
+
+2. DDL (DATA DEFINITION LANGUAGE)
+----------------------------------------------------------------------
+DDL commands are used to build, alter, and destroy the structural 
+blueprint (the empty tables) of the database.
+- CREATE SCHEMA / TABLE: Sets up organized workspaces and defined data columns.
+- ALTER TABLE: Allows modifying existing structures on the fly (Adding, 
+  renaming, changing data types, or deleting columns).
+- DROP TABLE: Permanently deletes a structural table object. This action 
+  is destructive and cannot be undone by a standard database rollback.
+
+3. DATA INTEGRITY & BUSINESS CONSTRAINTS
+----------------------------------------------------------------------
+Constraints are strict rules coded directly into the table architecture 
+to prevent incorrect data from ever being saved.
+- PRIMARY KEY: Guarantees that every single record has a completely unique ID.
+- FOREIGN KEY: Connects tables by ensuring a record in one table cannot 
+  exist without a valid, matching record in another (e.g., no transaction 
+  without an account).
+- CHECK: Enforces explicit business logic rules at the database layer, 
+  such as blocking negative balances (balance >= 0) or limiting input entries 
+  to strict categories like 'Savings', 'Current', or 'Fixed'.
+- DEFAULT: Automates data entry by automatically populating fields (like 
+  setting dates to CURRENT_DATE) if left blank.
+
+4. DML (DATA MANIPULATION LANGUAGE)
+----------------------------------------------------------------------
+DML commands are used to manage, manipulate, and query the actual row records 
+living inside the structural tables.
+- INSERT INTO: Adds new row records into target tables.
+- SELECT: Retrieves and displays stored data from the database.
+- UPDATE: Modifies existing row values in a table.
+- DELETE FROM: Permanently removes specific row records from a table.
+
+CRITICAL RULE (The WHERE Clause): 
+When executing UPDATE or DELETE commands, a 'WHERE' clause must always 
+be used to isolate specific records. Forgetting the 'WHERE' clause will 
+cause the command to overwrite or wipe out every single row in the entire 
+database table simultaneously.
+======================================================================
