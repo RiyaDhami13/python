@@ -63,3 +63,16 @@ WHERE account_id = 1;
 
 DELETE FROM banking.accounts
 WHERE account_id = 1;
+
+SELECT * FROM banking.accounts;
+SELECT * FROM banking.transactions;
+
+
+CREATE TABLE banking.customers (customer_id INT PRIMARY KEY, name VARCHAR(50));
+CREATE TABLE banking.branches (branch_id INT PRIMARY KEY, branch_name VARCHAR(50));
+
+INSERT INTO banking.customers VALUES (101, 'Riya');
+INSERT INTO banking.branches VALUES (1, 'Mahendranagar Branch');
+
+INSERT INTO banking.accounts (account_id, customer_id, branch_id, account_number, account_type, balance)
+VALUES (1, 101, 1, 'ACC-999', 'Savings', 1500.00);
