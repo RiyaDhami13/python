@@ -8,13 +8,19 @@ CREATE SCHEMA IF NOT EXISTS banking;
 -- =========================================================================
 CREATE TABLE banking.customers (
     customer_id INT PRIMARY KEY, 
-    name VARCHAR(50)
+    full_name VARCHAR(100),
+    city VARCHAR(50)
 );
 
 CREATE TABLE banking.branches (
     branch_id INT PRIMARY KEY, 
     branch_name VARCHAR(50)
 );
+
+CREATE TABLE banking.branch_targets (
+    branch_code VARCHAR(10) PRIMARY KEY,
+    target_amount NUMERIC(12,2)
+)
 
 -- =========================================================================
 -- STEP 3: PRACTICE DDL ALTERATIONS (Runs cleanly now that customers exists)
@@ -34,20 +40,20 @@ ALTER TABLE banking.customers DROP COLUMN contact_number;
 -- =========================================================================
 -- STEP 4: CREATE DEPENDENT TABLES (With Foreign Keys)
 -- =========================================================================
--- Note the added semicolon (;) at the end of this block to prevent the line 17 error!
+
 CREATE TABLE banking.accounts (
-  account_id INT PRIMARY KEY,
-  customer_id INT,
-  branch_id INT,
-  account_number VARCHAR(20) UNIQUE NOT NULL,
-  account_type VARCHAR(20) NOT NULL,
-  balance NUMERIC(10,2) NOT NULL DEFAULT 0,
-  opened_date DATE NOT NULL DEFAULT CURRENT_DATE,
-  is_active BOOLEAN NOT NULL DEFAULT TRUE,
-  CONSTRAINT chk_account_balance CHECK(balance >= 0),
-  CONSTRAINT chk_account_type CHECK(account_type IN ('Savings','Current','Fixed')),
-  CONSTRAINT fk_accounts_customer FOREIGN KEY (customer_id) REFERENCES banking.customers(customer_id),
-  CONSTRAINT fk_accounts_branch FOREIGN KEY (branch_id) REFERENCES banking.branches(branch_id)
+    account_id INT PRIMARY KEY,
+    customer_id INT,
+    branch_id INT,
+    account_number VARCHAR(20) UNIQUE NOT NULL,
+    account_type VARCHAR(20) NOT NULL,
+    balance NUMERIC(10,2) NOT NULL DEFAULT 0,
+    opened_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    CONSTRAINT chk_account_balance CHECK(balance >= 0),
+    CONSTRAINT chk_account_type CHECK(account_type IN ('Savings','Current','Fixed')),
+    CONSTRAINT fk_accounts_customer FOREIGN KEY (customer_id) REFERENCES banking.customers(customer_id),
+    CONSTRAINT fk_accounts_branch FOREIGN KEY (branch_id) REFERENCES banking.branches(branch_id)
 );
 
 CREATE TABLE banking.transactions (
@@ -65,16 +71,42 @@ CREATE TABLE banking.transactions (
 -- =========================================================================
 -- STEP 5: INSERT INITIAL DATA INTO BASE TABLES
 -- =========================================================================
-INSERT INTO banking.customers VALUES (101, 'Riya');
-INSERT INTO banking.branches VALUES (1, 'Mahendranagar Branch');
-INSERT INTO banking.branches VALUES (5, 'Dhangadhi Branch'); -- Added branch 5 since account 1 uses it
+INSERT INTO banking.customers (customer_id,full_name,city) VALUES
+(1, 'Shreesha Saud', 'Kathmandu'),
+(2, 'Sourav Gautam', 'Jhapa'),
+(3, 'Deepa Bhattarai', 'Lalitpur'),
+(4, 'Neha Pant', 'Kanchanpur'),
+(5, 'Soniya Thapa', 'Kailali'),
+(6, 'Riya Dhami', NULL);
+
+INSERT INTO banking.branches (branch_id, branch_name) VALUES
+(1, 'Kanchanpur Branch'),
+(2, 'Kathmandu Branch'),
+(3, 'Lalitpur Branch'),
+(4, 'Jhapa Branch');
+
+INSERT INTO banking.branche_target (5, 'Dhangadhi Branch') VALUES 
+('KTM', 500000.00),
+('KNR', 410000.00),
+('JHP', 300000.00);
+
 
 -- =========================================================================
 -- STEP 6: DML OPERATIONS (Valid Data, Updates, and Deletes)
 -- =========================================================================
 -- Insert account 1
-INSERT INTO banking.accounts (account_id, customer_id, branch_id, account_number, account_type, balance)
-VALUES (1, 101, 5, 'ACT-998822', 'Savings', 5000.00);
+INSERT INTO banking.accounts (account_id, customer_id, branch_id, account_number, account_type, balance) VALUES 
+(1, 1, 1, 'ACT-1001', 'Savings', 15000.00),
+(2, 2, 2, 'ACT-1002', 'Current', 25000.00),
+(3, 3, 3, 'ACT-1003', 'Savings', 8500.00),
+(4, 4, 4, 'ACT-1004', 'Fixed', 120000.00),
+(5, 5, 1, 'ACT-1005', 'Savings', 4500.00);
+
+INSERT INTO banking.transactions (transaction_id, account_id, transaction_type, amount, description) VALUES 
+(501, 1, 'Deposit', 5000.00, 'Salary'),
+(502, 1, 'Withdraw', 1200.00, 'ATM cash'),
+(503, 2, 'Deposit', 10000.00, 'Online Transfer'),
+(504, 5, 'Deposit', 2500.00, 'Cash Deposit');
 
 -- Simulate update
 UPDATE banking.accounts SET balance = 7500.00 WHERE account_id = 1;
@@ -91,3 +123,23 @@ DELETE FROM banking.accounts WHERE account_id = 1;
 -- =========================================================================
 SELECT * FROM banking.accounts;
 SELECT * FROM banking.transactions;
+
+-- ==========================================================================
+-- STEP 8: PRACTING QUERIES FROM LECTURE
+-- ==========================================================================
+-- to test 4 - Table Chain Join 
+SELECT c.full_name, a.account_number, a.account_type, b.branch_name,
+        t.transaction_id, t.transacation_type, t.amount, t.transaction_date
+FROM banking.customers c
+INNER JOIN banking.accounts a ON c.customer_id = a.customer_id
+INNER JOIN banking.branches b ON a.branch_id = b.branch_id
+INNER JOIN banking.transactions t ON a.account_id = t.account_id;
+
+-- Testing the Multi aggreagation block
+SELECT
+    COUNT(*) AS total_accounts,
+    SUM(balance) AS total_bank_balance,
+    ROUND(AVG(balance),2) AS average_account_balance,
+    MIN(balance) AS lowest_balance,
+    MAX(balance) AS highest_balance
+FROM banking.accounts;
