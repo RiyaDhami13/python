@@ -4,6 +4,15 @@
 CREATE SCHEMA IF NOT EXISTS banking;
 
 -- =========================================================================
+-- CLEAN REFRESH: Drop existing tables in reverse dependency order
+-- =========================================================================
+DROP TABLE IF EXISTS banking.transactions CASCADE;
+DROP TABLE IF EXISTS banking.accounts CASCADE;
+DROP TABLE IF EXISTS banking.customers CASCADE;
+DROP TABLE IF EXISTS banking.branches CASCADE;
+DROP TABLE IF EXISTS banking.branch_targets CASCADE;
+
+-- =========================================================================
 -- STEP 2: CREATE BASE TABLES FIRST (No dependencies)
 -- =========================================================================
 CREATE TABLE banking.customers (
@@ -20,7 +29,7 @@ CREATE TABLE banking.branches (
 CREATE TABLE banking.branch_targets (
     branch_code VARCHAR(10) PRIMARY KEY,
     target_amount NUMERIC(12,2)
-)
+);
 
 -- =========================================================================
 -- STEP 3: PRACTICE DDL ALTERATIONS (Runs cleanly now that customers exists)
@@ -40,7 +49,6 @@ ALTER TABLE banking.customers DROP COLUMN contact_number;
 -- =========================================================================
 -- STEP 4: CREATE DEPENDENT TABLES (With Foreign Keys)
 -- =========================================================================
-
 CREATE TABLE banking.accounts (
     account_id INT PRIMARY KEY,
     customer_id INT,
@@ -71,7 +79,7 @@ CREATE TABLE banking.transactions (
 -- =========================================================================
 -- STEP 5: INSERT INITIAL DATA INTO BASE TABLES
 -- =========================================================================
-INSERT INTO banking.customers (customer_id,full_name,city) VALUES
+INSERT INTO banking.customers (customer_id, full_name, city) VALUES
 (1, 'Shreesha Saud', 'Kathmandu'),
 (2, 'Sourav Gautam', 'Jhapa'),
 (3, 'Deepa Bhattarai', 'Lalitpur'),
@@ -85,22 +93,20 @@ INSERT INTO banking.branches (branch_id, branch_name) VALUES
 (3, 'Lalitpur Branch'),
 (4, 'Jhapa Branch');
 
-INSERT INTO banking.branche_target (5, 'Dhangadhi Branch') VALUES 
+INSERT INTO banking.branch_targets (branch_code, target_amount) VALUES 
 ('KTM', 500000.00),
 ('KNR', 410000.00),
 ('JHP', 300000.00);
 
-
 -- =========================================================================
 -- STEP 6: DML OPERATIONS (Valid Data, Updates, and Deletes)
 -- =========================================================================
--- Insert account 1
 INSERT INTO banking.accounts (account_id, customer_id, branch_id, account_number, account_type, balance) VALUES 
-(1, 1, 1, 'ACT-1001', 'Savings', 15000.00),
+(1, 5, 1, 'ACT-1001', 'Savings', 15000.00), 
 (2, 2, 2, 'ACT-1002', 'Current', 25000.00),
 (3, 3, 3, 'ACT-1003', 'Savings', 8500.00),
 (4, 4, 4, 'ACT-1004', 'Fixed', 120000.00),
-(5, 5, 1, 'ACT-1005', 'Savings', 4500.00);
+(5, 1, 1, 'ACT-1005', 'Savings', 4500.00);
 
 INSERT INTO banking.transactions (transaction_id, account_id, transaction_type, amount, description) VALUES 
 (501, 1, 'Deposit', 5000.00, 'Salary'),
@@ -113,9 +119,12 @@ UPDATE banking.accounts SET balance = 7500.00 WHERE account_id = 1;
 
 -- Insert account 2 (Valid placeholder for later)
 INSERT INTO banking.accounts (account_id, customer_id, branch_id, account_number, account_type, balance)
-VALUES (10, 101, 1, 'ACC-999', 'Savings', 1500.00);
+VALUES (10, 5, 1, 'ACC-999', 'Savings', 1500.00);
 
--- Simulate delete on account 1
+-- 1. Delete the dependent records first
+DELETE FROM banking.transactions WHERE account_id = 1;
+
+-- 2. Now you can safely delete the parent account row
 DELETE FROM banking.accounts WHERE account_id = 1;
 
 -- =========================================================================
@@ -125,17 +134,17 @@ SELECT * FROM banking.accounts;
 SELECT * FROM banking.transactions;
 
 -- ==========================================================================
--- STEP 8: PRACTING QUERIES FROM LECTURE
+-- STEP 8: PRACTICING QUERIES FROM LECTURE
 -- ==========================================================================
--- to test 4 - Table Chain Join 
+-- To test 4-Table Chain Join (Typo 'transacation_type' fixed)
 SELECT c.full_name, a.account_number, a.account_type, b.branch_name,
-        t.transaction_id, t.transacation_type, t.amount, t.transaction_date
+        t.transaction_id, t.transaction_type, t.amount, t.transaction_date
 FROM banking.customers c
 INNER JOIN banking.accounts a ON c.customer_id = a.customer_id
 INNER JOIN banking.branches b ON a.branch_id = b.branch_id
 INNER JOIN banking.transactions t ON a.account_id = t.account_id;
 
--- Testing the Multi aggreagation block
+-- Testing the Multi aggregation block
 SELECT
     COUNT(*) AS total_accounts,
     SUM(balance) AS total_bank_balance,
