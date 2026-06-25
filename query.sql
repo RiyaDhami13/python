@@ -221,3 +221,46 @@ SELECT * FROM banking.customers
 WHERE customer_id IN (
     SELECT customer_id FROM banking.accounts WHERE account_type = 'Savings'
 );
+
+
+-- ==========================================================================
+-- STEP 11: ADVANCED SUBQUERIES (Queries inside Queries)
+-- ==========================================================================]
+
+-- 1. The FROM Clause
+SELECT
+    summary.account_id,
+    summary.total_tx_amount
+FROM (
+    SELECT account_id, COUNT(*) AS tx_count, SUM(amount) AS total_tx_amount
+    FROM banking.transactions
+    GROUP BY account_id
+) AS summary
+WHERE summary.tx_count >= 2;
+
+--2. EXISTS Clause
+SELECT customer_id, full_name
+FROM banking.customers c
+WHERE EXISTS (
+    SELECT 1
+    FROM banking.accounts a
+    WHERE a.customer_id = c.customer_id
+);
+
+--3. NOT EXISTS Clause
+SELECT customer_id, full_name
+FROM banking.customers c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM banking.accounts a
+    WHERE a.customer_id = c.customer_id
+);
+
+--4. Correlated subquery
+SELECT a1.account_id, a1.account_number, a1.account_type, a1.balance
+FROM banking.accounts a1
+WHERE a1.balance > (
+    SELECT AVG(a2.balance)
+    FROM banking.accounts a2
+    WHERE a2.account_type = a1.account_type
+);
