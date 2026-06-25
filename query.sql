@@ -152,3 +152,72 @@ SELECT
     MIN(balance) AS lowest_balance,
     MAX(balance) AS highest_balance
 FROM banking.accounts;
+
+-- ==========================================================================
+-- STEP 9: NEW LECTURE MATERIAL - GROUP BY, COALESCE, & HAVING
+-- ==========================================================================
+
+-- 1. Simple Grouping: Count accounts by their type
+SELECT account_type, COUNT(*) AS account_count
+FROM banking.accounts
+GROUP BY account_type;
+
+-- 2. Multi-Aggregation Grouping by Account Type
+SELECT 
+    account_type, 
+    COUNT(*) AS account_count,
+    SUM(balance) AS total_balance,
+    ROUND(AVG(balance), 2) AS average_balance
+FROM banking.accounts
+GROUP BY account_type;
+
+-- 3. Grouping after a JOIN with COALESCE to handle NULL values cleanly
+SELECT 
+    b.branch_id, 
+    b.branch_name, 
+    COUNT(a.account_id) AS account_count,
+    COALESCE(SUM(a.balance), 0) AS total_balance
+FROM banking.branches b
+LEFT JOIN banking.accounts a ON b.branch_id = a.branch_id
+GROUP BY b.branch_id, b.branch_name;
+
+-- 4. Grouping by Multiple Columns (Branch + Account Type)
+SELECT 
+    b.branch_name, 
+    a.account_type, 
+    COUNT(*) AS account_count,
+    SUM(a.balance) AS total_balance
+FROM banking.accounts a
+LEFT JOIN banking.branches b ON a.branch_id = b.branch_id
+GROUP BY b.branch_name, a.account_type
+ORDER BY b.branch_name, a.account_type;
+
+-- 5. Filtering Aggregated Groups using HAVING (Total balance > 50,000)
+SELECT account_type, SUM(balance) AS total_balance
+FROM banking.accounts
+GROUP BY account_type
+HAVING SUM(balance) > 50000;
+
+-- 6. Combining WHERE and HAVING (Filters rows first, then filters groups)
+SELECT transaction_type, SUM(amount) AS total_amount
+FROM banking.transactions
+WHERE transaction_date >= '2026-01-01'  
+GROUP BY transaction_type
+HAVING COUNT(*) >= 2;
+
+-- ==========================================================================
+-- STEP 10: SUBQUERIES (Queries inside Queries)
+-- ==========================================================================
+
+-- 1. Scalar Subquery: Find accounts with balances higher than the bank average
+SELECT account_id, account_number, balance
+FROM banking.accounts
+WHERE balance > (
+    SELECT AVG(balance) FROM banking.accounts
+);
+
+-- 2. Multi-Row Subquery using IN: Find customers who have a Savings account
+SELECT * FROM banking.customers
+WHERE customer_id IN (
+    SELECT customer_id FROM banking.accounts WHERE account_type = 'Savings'
+);
