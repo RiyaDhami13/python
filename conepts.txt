@@ -52,3 +52,33 @@ be used to isolate specific records. Forgetting the 'WHERE' clause will
 cause the command to overwrite or wipe out every single row in the entire 
 database table simultaneously.
 ======================================================================
+
+5. DATA AGGREGATION & REPORT CLEANING
+----------------------------------------------------------------------
+- GROUP BY: Splits table rows into distinct summary buckets based on matching 
+  column values (e.g., grouping rows by 'account_type') so calculations can 
+  be run on each group individually instead of the entire dataset.
+- AGGREGATE FUNCTIONS:
+  * COUNT(): Calculates total rows. COUNT(*) counts all rows; COUNT(column) 
+    ignores NULL values.
+  * SUM() / AVG(): Calculates totals and averages across numerical groups.
+  * MIN() / MAX(): Identifies extreme boundaries within a dataset group.
+- COALESCE(val1, val2, ...): Evaluates inputs from left to right and returns 
+  the first non-null value. Essential for replacing messy 'NULL' markers in 
+  business reports with clean, understandable defaults like 0.
+
+6. ADVANCED DATARETRIEVAL FILTERS (DQL)
+----------------------------------------------------------------------
+- HAVING vs. WHERE (The Order of Operations Constraint):
+  * WHERE: Filters individual source rows BEFORE any grouping occurs. It 
+    cannot contain aggregate functions (e.g., WHERE SUM(balance) > 50000 is an error).
+  * HAVING: Filters the final computed buckets AFTER the GROUP BY operation 
+    has executed.
+- SUBQUERIES (Nested Expressions):
+  * A query placed inside another SQL query. The inner query executes first, 
+    and its output acts as a dynamic parameter for the outer query.
+  * SCALAR SUBQUERY: An inner query that returns exactly one single value 
+    (e.g., finding rows greater than the bank's average balance).
+  * MULTI-ROW SUBQUERY: An inner query that returns a list of values to be 
+    used alongside operators like 'IN'.
+======================================================================
