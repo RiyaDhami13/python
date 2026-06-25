@@ -264,3 +264,4 @@ WHERE a1.balance > (
     FROM banking.accounts a2
     WHERE a2.account_type = a1.account_type
 );
+
