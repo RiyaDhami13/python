@@ -61,8 +61,36 @@ payment_method VARCHAR(30) NOT NULL,
 payment_status VARCHAR(20) DEFAULT 'COMPLETED',
 
 --Table Constraints
-  CONSTRAINT pk_loan_payments PRIMARY KEY 
+  CONSTRAINT pk_loan_payments PRIMARY KEY (payment_id),
+  CONSTRAINT fk_payment_loans FOREIGN KEY (loan_id) REFERENCES banking.loans(loan_id),
+  CONSTRAINT chk_payment_amount CHECK (payment_amount > 0),
+  CONSTRAINT chk_payment_method CHECK (payment_method IN ('CASH','BANK_TRANSFER','CHEQUE','ONLINE')),
+  CONSTRAINT chk_payment_status CHECK (payment_status IN ('COMPLETED','PENDING','FAILED'))
 );
+
+-- ------------------------------------------------------------------------------------
+-- DAY 1, TASK 4: Test Constraints
+-- ------------------------------------------------------------------------------------
+
+-- Test 1: an employee with negative salary.
+INSERT INTO banking.employees (employee_id, branch_id, full_name, email, job_title, salary, hire_date)
+VALUES (99, 1, 'Riya Dhami', 'riya_dhami@mail.com', 'Loan Officer', -60000, '2025-05-14');
+
+-- Test 2: A loan with invalid type
+INSERT INTO banking.loand (loan_id,customer_id,branch_id,loan_type,loan_amount,interest_rate,start_date,end_date)
+VALUES (99,2,2,'STUDENT',50000.0,5.5,'2026-01-03','2026-05-24');
+
+-- Test 3: Loan for a customer that does not exist.
+INSERT INTO banking.loans (loan_id, customer_id, branch_id, loan_type, loan_amount, interest_rate, start_date, end_date)
+VALUES (99,999,1,'PERSONAL',10000.00,11.0,'2025-12-05','2026-05-15');
+
+-- Test 4: A loan whose end date is earlier than start date.
+INSERT INTO banking.loans (loan_id, customer_id, branch_id, loan_type, loan_amount, interest_rate, start_date, end_date)
+VALUES (99,1,1,'PERSONAL',10000.00,11.0,'2026-05-01','2026-01-15');
+
+-- Test 5: A payment with negative payment amount
+INSERT banking.loan_payments (payment_id, loan_id, payment_amount, payment_date, payment_method)
+VALUES (99,2,-2500.00,'2026-02-19','ONLINE');
 
 
 
