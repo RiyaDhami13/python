@@ -56,4 +56,60 @@ VALUES
 (514, 107, 213000.00, '2025-01-03', 'CHEQUE', 'COMPLETED'),
 (515, 101, 25000.00, '2025-04-10', 'BANK_TRANSFER', 'COMPLETED');
 
+-- --------------------------------------------------------------------
+-- Day 2, Task 4: ALTER TABLE Operations
+-- --------------------------------------------------------------------
+-- Add phone_number column
+ALTER TABLE banking.employees ADD COLUMN phone_number VARCHAR(20);
 
+-- Rename it to contact_number
+ALTER TABLE banking.employees RENAME COLUMN phone_number TO contact_number;
+
+-- Increase its maximum character capacity length
+ALTER TABLE banking.employees ALTER COLUMN contact_number TYPE VARCHAR(30);
+
+-- Create a temporary metadata notes table
+CREATE TABLE banking.loan_notes_temp (
+    note_id INT PRIMARY KEY,
+    loan_remarks TEXT,
+    logged_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Drop the temporary table structure completely
+DROP TABLE banking.loan_notes_temp;
+
+-- --------------------------------------------------------------------
+-- Day 2, Task 5: Safe UPDATE Operations
+-- Rule: Run a targeted SELECT verifying the matching WHERE row before altering.
+-- --------------------------------------------------------------------
+-- Update 1: Increase employee #3's salary by 10%
+SELECT * FROM banking.employees WHERE employee_id = 3;
+UPDATE banking.employees SET salary = salary * 1.10 WHERE employee_id = 3;
+
+-- Update 2: Mark employee #5 as inactive
+SELECT * FROM banking.employees WHERE employee_id = 5;
+UPDATE banking.employees SET is_active = FALSE WHERE employee_id = 5;
+
+-- Update 3: Change active loan #106 to closed
+SELECT * FROM banking.loans WHERE loan_id = 106;
+UPDATE banking.loans SET loan_status = 'CLOSED' WHERE loan_id = 106;
+
+-- Update 4: Change pending payment #507 to completed
+SELECT * FROM banking.loan_payments WHERE payment_id = 507;
+UPDATE banking.loan_payments SET payment_status = 'COMPLETED' WHERE payment_id = 507;
+
+-- --------------------------------------------------------------------
+-- Day 2, Task 6: Safe DELETE Operations
+-- --------------------------------------------------------------------
+-- Insert a temporary payment row
+INSERT INTO banking.loan_payments (payment_id, loan_id, payment_amount, payment_date, payment_method, payment_status)
+VALUES (999, 101, 10.00, '2026-01-01', 'CASH', 'FAILED');
+
+-- Verify the record exists
+SELECT * FROM banking.loan_payments WHERE payment_id = 999;
+
+-- Delete the record safely using its exact primary key location
+DELETE FROM banking.loan_payments WHERE payment_id = 999;
+
+-- Re-verify it has been removed from the dataset
+SELECT * FROM banking.loan_payments WHERE payment_id = 999;
