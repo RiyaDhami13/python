@@ -22,7 +22,7 @@ VALUES
 -- Day2, Task 2: Insert Loans
 -- Requirements: at least 8 loans, 3 branches, 2 customers with multiple loans, 1 customer with no loans ,active,closed, and defaulted loan and 1 loan with no payments
 -- ----------------------------------------------------------------------------------
-INSERT INTO banking.loans (loan_id,customer_id,branch_id,loan_type, loan_amount,interest_rate,start_date,end_date)
+INSERT INTO banking.loans (loan_id,customer_id,branch_id,loan_type, loan_amount,interest_rate,start_date,end_date,loan_status)
 VALUES 
 (101,1,1,'HOME',1200000.00,7.5,'2025-02-05','2034-03-06','ACTIVE'),
 (102,2,2,'AUTO',350000.00,10.25,'2024-06-19','2029-09-30','CLOSED'),
