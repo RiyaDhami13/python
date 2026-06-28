@@ -186,12 +186,13 @@ FROM banking.loans as l;
 -- Employee salary classification, Loan size classification, and Payment descriptions
 -- Employee salary classification
 SELECT
-      e.full_name,
-      e.salary,   
-            WHEN e.salary >= 100000.00 THEN 'HIGH'
-            WHEN e.salary >= 60000.00 AND e.salary < 100000.00 THEN 'MEDIUM'
-            ELSE 'LOW'
-      END AS salary_classification
+    e.full_name,
+    e.salary,   
+    CASE
+        WHEN e.salary >= 100000.00 THEN 'HIGH'
+        WHEN e.salary >= 60000.00 AND e.salary < 100000.00 THEN 'MEDIUM'
+        ELSE 'LOW'
+    END AS salary_classification
 FROM banking.employees AS e;
 
 SELECT
