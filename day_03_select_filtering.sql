@@ -170,9 +170,49 @@ ORDER BY p.payment_method DESC
 LIMIT 5;
 
 -- ----------------------------------------------------------------------------
--- Day 3, task 4: 
+-- Day 3, task 4: Arithmetic and Aliases
+-- ----------------------------------------------------------------------------
+SELECT
+      l.loan_id,
+      l.loan_amount,
+      l.interest_rate,
+      ROUND((l.loan_amount * l.interest_rate / 100.00),2) AS anual_interest_rate
+FROM banking.loans as l;
 
+-- ---------------------------------------------------------------------------------
+-- Day 3, Task 5: CASE expressions
+-- ----------------------------------------------------------------------------------
 
+-- Employee salary classification, Loan size classification, and Payment descriptions
+SELECT
+      e.full_name,
+      e.salary.
+      CASE
+            WHEN e.salary >= 10000.00 THEN 'HIGH'
+            WHEN e.salary >= 6000.00 AND e.salary < 10000.00 THEN 'MEDIUM'
+            ELSE 'LOW'
+      END AS salary_classification
+FROM banking.employees as e;
+
+SELECT
+      l.loan_id,
+      l.loan_amount,
+      CASE 
+            WHEN l.loan_amount >= 1000000.00 THEN 'LARGE'
+            WHEN l.loan_amount >= 300000.00 AND l.loan_amount < 1000000.00 THEN 'MEDIUM'
+            ELSE 'SMALL'
+      END AS loan_size_classification
+FROM banking.loans AS l;
+
+SELECT
+      p.payment_id,
+      p.payment_status,
+      CASE 
+            WHEN p.payment_status = 'COMPLETED' THEN 'Successful Payment'
+            WHEN p.payment_status = 'PENDING' THEN 'Awaiting Confirmation'
+            WHEN p.payment_status = 'FAILED' THEN 'Unsuccessful Payment'
+      END AS payment_status_description
+FROM banking.loan_payments AS p;
 
 
 
