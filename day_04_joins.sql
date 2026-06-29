@@ -10,8 +10,7 @@ SELECT
     e.full_name AS employee_name,
     e.job_title,
     e.salary,
-    b.branch_name,
-    b.branch_city
+    b.branch_name
 FROM banking.employees AS e
 INNER JOIN banking.branches AS b
     ON e.branch_id = b.branch_id;
@@ -22,7 +21,6 @@ INNER JOIN banking.branches AS b
 -- --------------------------------------------------------------------
 SELECT
     b.branch_name,
-    b.branch_city,
     e.full_name AS employee_name,
     e.job_title
 FROM banking.branches AS b
