@@ -69,8 +69,7 @@ ORDER BY payment_count DESC;
 
 -- Total number of employees assigned to each branch location
 SELECT 
-    b.branch_name,
-    b.city,
+    b.branch_name
     COUNT(e.employee_id) AS total_staff
 FROM banking.branches AS b
 LEFT JOIN banking.employees AS e
